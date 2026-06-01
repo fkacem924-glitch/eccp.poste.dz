@@ -1,213 +1,35 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ECCP - Dashboard</title>
-    <style>
-        body {
-            margin: 0; padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f2f2f2;
-        }
-
-        .header {
-            background-color: #1c3d6b;
-            height: 62px;
-            display: flex; align-items: center; padding: 0 16px;
-            justify-content: space-between;
-        }
-        .header-left { display: flex; align-items: center; gap: 12px; }
-        .logo { width: 46px; height: 46px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-        .logo img { width: 85%; }
-        .ccp-txt { color: white; font-size: 19px; }
-
-        .menu-icon { display: flex; flex-direction: column; gap: 5px; cursor: pointer; }
-        .bar { width: 28px; height: 3px; background-color: #fcc12d; border-radius: 2px; }
-
-        .container { padding: 0 16px; }
-        .title { color: #1c3d6b; font-size: 21px; margin: 30px 0 0; font-weight: 500; }
-        .line { width: 100%; height: 3px; background: #fcc12d; margin: 8px 0 25px; }
-
-        .card {
-            background: white; border: 1px solid #ddd; border-radius: 12px;
-            padding: 24px; margin-bottom: 35px;
-        }
-        .info-txt { font-size: 18px; margin-bottom: 12px; color: #333; }
-        .solde-label { color: #1c3d6b; font-weight: 700; font-size: 19px; margin-top: 20px; display: block; }
-        
-        .solde-box {
-            background-color: #1c3d6b; 
-            color: #ffffff; 
-            display: inline-block;
-            padding: 10px 15px; 
-            border-radius: 4px; 
-            font-size: 28px; 
-            font-weight: 400; /* خط رقيق */
-            margin-top: 6px;
-            /* سر الالتصاق: تضييق المسافة بين الحروف وحذف الفراغات */
-            letter-spacing: -2.2px;
-            font-variant-numeric: tabular-nums;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .section-title { color: #555; font-size: 21px; margin: 40px 0 10px; border-bottom: 1.5px solid #1c3d6b; padding-bottom: 10px; }
-
-        .operation-divider {
-            border: 0; height: 1.5px; background-color: #1c3d6b;
-            margin: 10px 0 20px 0; opacity: 0.8;
-        }
-
-        .date-head { font-weight: 700; font-size: 17px; margin: 25px 0 12px; }
-        .item { background: white; border: 1px solid #ddd; border-radius: 10px; padding: 18px; margin-bottom: 15px; }
-        .row { display: flex; justify-content: space-between; align-items: center; }
-        .amt-neg { color: #b71c1c; font-weight: bold; font-size: 18px; }
-        .amt-pos { color: #2e7d32; font-weight: bold; font-size: 18px; }
-        .gray { color: #777; font-size: 15px; }
-
-        #admin { position: fixed; top: 0; right: -100%; width: 250px; height: 100%; background: #1c3d6b; transition: 0.3s; z-index: 2000; padding: 25px; }
-        #admin.open { right: 0; }
-        .adm-btn { width: 100%; padding: 15px; margin-bottom: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; color: #1c3d6b; }
-
-        .navbar { position: fixed; bottom: 0; left: 0; right: 0; background: #f9f9f9; border-top: 1px solid #ccc; padding: 12px 20px 28px; display: flex; justify-content: space-between; }
-        .url { background: #e0e0e0; padding: 7px 40px; border-radius: 10px; font-size: 14px; }
-    </style>
+    <title>لوحة التحكم</title>
 </head>
 <body>
-
-<div id="admin">
-    <button class="adm-btn" onclick="add('plus')">Ajouter Solde</button>
-    <button class="adm-btn" onclick="add('minus')">Retirer Solde</button>
-    <button class="adm-btn" style="background:red; color:white;" onclick="localStorage.clear(); location.reload();">Reset</button>
-    <button class="adm-btn" style="background:#fcc12d" onclick="toggle()">Fermer</button>
-</div>
-
-<div class="header">
-    <div class="header-left">
-        <div class="logo"><img src="https://upload.wikimedia.org/wikipedia/commons/3/36/Alg%C3%A9rie_Poste_logo.svg"></div>
-        <div class="ccp-txt">CCP 0042692035</div>
-    </div>
-    <div class="menu-icon" onclick="toggle()">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-    </div>
-</div>
-
-<div class="container">
-    <div class="title">EXTRAIT DE COMPTE</div>
-    <div class="line"></div>
-
-    <div class="card">
-        <div class="info-txt"><strong>Compte :</strong> 42692035</div>
-        <div class="info-txt" id="date-val"><strong>Date :</strong> --/--/---- à --:--</div>
-        <span class="solde-label">Votre solde :</span>
-        <div class="solde-box" id="main-solde"></div>
+    <div style="text-align:center; padding: 50px;">
+        <h2>نظام التنبيهات</h2>
+        <input type="text" id="name" placeholder="اسم المستخدم"><br>
+        <select id="action">
+            <option value="مراقبة">مراقبة</option>
+            <option value="فلترة">فلترة</option>
+        </select><br>
+        <button onclick="sendData()">إرسال</button>
+        <p id="result"></p>
     </div>
 
-    <div class="section-title">Opérations récentes</div>
-    <div id="list"></div>
-</div>
-
-<div style="height: 100px;"></div>
-
-<div class="navbar">
-    <span style="color:#007aff; font-size:26px;">＜</span>
-    <div class="url">eccp.poste.dz</div>
-    <span style="color:#007aff; font-size:26px;">❐</span>
-</div>
-
-<script>
-    let db = JSON.parse(localStorage.getItem('ccp_v12_compact')) || {
-        balance: 4581.73,
-        items: [
-            { date: '02/02/2026', amt: -2000, type: 'minus', label: '223 DAB', comp: '311018', tax: '30,00' },
-            { date: '02/02/2026', amt: 2000, type: 'plus', label: '260 V', comp: '20426031', tax: '0,00' }
-        ]
-    };
-
-    function toggle() { document.getElementById('admin').classList.toggle('open'); }
-
-    function formatMoney(n, isBlueBox = false) {
-        let parts = Math.abs(n).toFixed(2).split(".");
-        // إضافة مسافة عادية للآلاف في القائمة العادية فقط
-        let formattedPart1 = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, isBlueBox ? " " : " ");
-        let result = formattedPart1 + "," + parts[1] + " DA";
-        
-        if (isBlueBox) {
-            // نستخدم أرقام عادية مع تضييق المسافات عبر CSS للحصول على التصاق تام
-            return result;
-        }
-        return result;
-    }
-
-    function update() {
-        document.getElementById('main-solde').innerText = formatMoney(db.balance, true);
-        
-        const now = new Date();
-        const formattedDate = now.toLocaleDateString('fr-FR');
-        const formattedTime = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
-        document.getElementById('date-val').innerHTML = `<strong>Date :</strong> ${formattedDate} à ${formattedTime}`;
-
-        const container = document.getElementById('list');
-        container.innerHTML = '';
-
-        const groups = {};
-        db.items.forEach(i => {
-            if (!groups[i.date]) groups[i.date] = [];
-            groups[i.date].push(i);
-        });
-
-        Object.keys(groups).reverse().forEach(d => {
-            const h = document.createElement('div');
-            h.className = 'date-head'; h.innerText = d + " :";
-            container.appendChild(h);
-
-            const dayItems = groups[d].reverse();
-            dayItems.forEach((item, index) => {
-                const div = document.createElement('div');
-                div.className = 'item';
-                div.innerHTML = `
-                    <div class="row">
-                        <span class="${item.type === 'plus' ? 'amt-pos' : 'amt-neg'}">
-                            ${item.type === 'plus' ? '+' : '-'}${formatMoney(item.amt)}
-                        </span>
-                        <span class="gray">Taxe : ${item.tax}</span>
-                    </div>
-                    <div class="row" style="margin-top:10px;">
-                        <span class="gray">${item.label}</span>
-                        <span class="gray">Compte : ${item.comp}</span>
-                    </div>
-                `;
-                container.appendChild(div);
-
-                if (index < dayItems.length - 1) {
-                    const hr = document.createElement('hr');
-                    hr.className = 'operation-divider';
-                    container.appendChild(hr);
-                }
+    <script>
+        async function sendData() {
+            const data = {
+                name: document.getElementById('name').value,
+                action: document.getElementById('action').value
+            };
+            const response = await fetch('/process', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
             });
-        });
-        localStorage.setItem('ccp_v12_compact', JSON.stringify(db));
-    }
-
-    function add(type) {
-        toggle();
-        let val = prompt("Montant :");
-        if (val && !isNaN(val)) {
-            const amount = parseFloat(val);
-            const today = new Date().toLocaleDateString('fr-FR');
-            db.balance += (type === 'plus' ? amount : -amount);
-            db.items.push({
-                date: today, amt: amount,
-                type: type, label: type === 'plus' ? '260 V' : '223 DAB',
-                comp: '20426031', tax: type === 'plus' ? '0,00' : '30,00'
-            });
-            update();
+            const result = await response.json();
+            document.getElementById('result').innerText = result.message;
         }
-    }
-
-    update();
-</script>
+    </script>
 </body>
 </html>
